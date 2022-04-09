@@ -5,5 +5,4 @@ library(tseries)
 library(ggridges)
 library(gt)
 library(progress)
-
-install.packages('icescrapR')
+library(scales)
