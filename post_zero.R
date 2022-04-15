@@ -4,14 +4,6 @@ source('libraries.R')
 source('functions.R')
 source('data.R')
 
-# create analysis set
-all_shots <- 
-  read_csv(paste0(download_dir, "shots_2007-2020.csv")) %>%
-  clean_names %>%
-  mutate(is_ot = ifelse(time > 3600, 1, 0)) %>%
-  filter(season >= 2015, is_playoff_game == 0) %>%
-  select(season, game_id, time, is_ot, home_team_won, home_team_code, away_team_code, team, goal, x_goal)
-
 team_ot_summary <-
   all_shots %>%
   filter(is_ot == 0) %>%
@@ -34,14 +26,9 @@ ggplot(data = team_ot_summary, aes(x=points, y=ot)) +
   geom_point(col = single_color, alpha = 0.7) +
   labs(x = '\nStanding Points Per Game', y = 'OT Games\n') +
   scale_y_continuous(labels = percent) +
-  dark_theme() +
-  theme(
-    panel.grid.major = element_line(color = 'black'),
-    panel.grid.minor = element_line(color = 'black')
-  ) 
+  dark_theme()
 
-ggsave(filename = 'post-regulation-zero-one.png', path = '/Users/ada/Documents/GitHub/spazznolo.github.io/figs', width = 5, height = 3, device = 'png', dpi = 320)
+ggsave(filename = 'post-regulation-zero-one.png', path = '/Users/ada/Documents/projects/spazznolo.github.io/figs', width = 5, height = 3, device = 'png', dpi = 320)
 
-summary(lm(ot ~ points, ot_win %>% filter(points > 0.6) %>% mutate(points_2 = (points - 1)^2))) 
-
+summary(lm(ot ~ points_2, team_ot_summary %>% filter(points > 0.6) %>% mutate(points_2 = (points - 1)))) 
 

@@ -5,7 +5,7 @@
 dark_theme <- function() {
   
   theme(
-    panel.grid.major = element_line(color = '#99a1b3'),
+    panel.grid.major = element_line(color = 'black'),
     panel.grid.minor = element_line(color = 'black'),
     panel.background = element_rect(fill = 'black'),
     panel.border=element_blank(),
@@ -25,5 +25,5 @@ dark_theme <- function() {
 }
 
 
-single_color = "#FFD500"
+single_color = "#F9C802"
 multiple_colors = rev(heat.colors(30)[21:30])
